@@ -180,19 +180,19 @@ POI.forEach(([lat,lon,color,name,date,info,isCastle]) => {
 const BOOKINGS = [
   [53.0138, -9.3757, COLOR.doolin, 'Aran Islands (Inis M&oacute;r) &amp; Cliffs Combo', '9 ao&ucirc;t (&agrave; confirmer)',
    'D&eacute;part Doolin Pier &mdash; combo &icirc;les d\'Aran + vue des falaises depuis la mer',
-   'https://doolinferry.com/book-aran-cliffs-combo/inis-mor/', 'aran'],
-  [52.1400, -10.2680, COLOR.killarney, 'Dingle Dolphin &mdash; Mini Eco Tour', '7 ao&ucirc;t (&agrave; confirmer)',
-   'D&eacute;part Dingle Marina &mdash; sortie 2h en famille, id&eacute;ale avec un b&eacute;b&eacute;',
-   'https://www.dingledolphin.com/book-now/', 'dolphin'],
+   'https://doolinferry.com/book-aran-cliffs-combo/inis-mor/', 'aran', 'R&eacute;server'],
+  [52.1400, -10.2680, COLOR.killarney, 'Dingle Dolphin &mdash; Mini Eco Tour', '6 ao&ucirc;t, 11h15&ndash;13h15',
+   'R&eacute;serv&eacute; &mdash; booking #364688290<br>Unit 2, The Pier, Dingle, Co. Kerry, V92 A6XT<br>Arriver 30 min avant (10h45)',
+   'https://fareharbor.com/embeds/book/dingledolphin/items/276837/booking/c5489792-9220-46c3-b67d-4f63025e15f1/', 'dolphin', 'Voir la r&eacute;servation'],
 ];
 const bookingIcon = {
   'aran': boatIcon,
   'dolphin': dolphinIcon,
 };
-BOOKINGS.forEach(([lat,lon,color,name,date,info,url,kind]) => {
+BOOKINGS.forEach(([lat,lon,color,name,date,info,url,kind,linkLabel]) => {
   L.marker([lat,lon], {icon: bookingIcon[kind](color)})
     .bindTooltip(`<b>${name}</b> &mdash; ${date}`, {className:'date-tip'})
-    .bindPopup(`<b>${name}</b><br>${date}<br>${info}<br><a href="${url}" target="_blank" rel="noopener">R&eacute;server &rarr;</a>`)
+    .bindPopup(`<b>${name}</b><br>${date}<br>${info}<br><a href="${url}" target="_blank" rel="noopener">${linkLabel} &rarr;</a>`)
     .addTo(lgPoi);
 });
 
