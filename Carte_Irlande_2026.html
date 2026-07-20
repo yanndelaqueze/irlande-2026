@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Carte du voyage - Grand Tour d'Irlande 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<style>
+  html, body { margin:0; padding:0; height:100%; font-family: Arial, Helvetica, sans-serif; }
+  #map { position:absolute; top:0; bottom:0; left:0; right:0; }
+  #title {
+    position:absolute; top:10px; left:50px; z-index:1000; background:rgba(255,255,255,0.92);
+    padding:6px 14px; border-radius:6px; box-shadow:0 1px 4px rgba(0,0,0,0.3); font-size:15px; font-weight:bold;
+  }
+  .leaflet-popup-content { font-size:13px; line-height:1.4; }
+  .leaflet-popup-content b { font-size:13.5px; }
+  .leaflet-popup-content a { color:#1a5fb4; font-weight:bold; }
+  .leaflet-tooltip.date-tip { font-size:12px; font-weight:bold; padding:3px 7px; }
+  .pin {
+    width:24px; height:24px; border-radius:50% 50% 50% 0; transform: rotate(-45deg);
+    border:2px solid white; box-shadow:0 1px 3px rgba(0,0,0,0.5);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .pin span { transform: rotate(45deg); font-size:12px; line-height:1; }
+  .star {
+    width:20px; height:20px; border-radius:50%;
+    border:2px solid white; box-shadow:0 1px 2px rgba(0,0,0,0.5);
+    display:flex; align-items:center; justify-content:center; font-size:11px;
+  }
+  .boatlabel { font-size:16px; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6)); }
+</style>
+</head>
+<body>
+<div id="title">&#9752; Grand Tour d'Irlande en famille &mdash; 2 au 14 ao&ucirc;t 2026</div>
+<div id="map"></div>
+<script>
+const map = L.map('map', { zoomControl: true }).setView([52.9, -8.7], 8);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+function houseIcon(color) {
+  return L.divIcon({
+    className: '',
+    html: `<div class="pin" style="background:${color};"><span>&#127968;</span></div>`,
+    iconSize: [24,24], iconAnchor: [12,24], popupAnchor: [0,-22]
+  });
+}
+function starIcon(color) {
+  return L.divIcon({
+    className: '',
+    html: `<div class="star" style="background:${color};"><span>&#11088;</span></div>`,
+    iconSize: [20,20], iconAnchor: [10,10], popupAnchor: [0,-10]
+  });
+}
+function castleIcon(color) {
+  return L.divIcon({
+    className: '',
+    html: `<div class="star" style="background:${color};"><span>&#127984;</span></div>`,
+    iconSize: [20,20], iconAnchor: [10,10], popupAnchor: [0,-10]
+  });
+}
+function ferryIcon() {
+  return L.divIcon({ className: '', html: `<div class="boatlabel">&#9875;</div>`,
+    iconSize:[22,22], iconAnchor:[11,11], popupAnchor:[0,-10] });
+}
+function dolphinIcon(color) {
+  return L.divIcon({
+    className: '',
+    html: `<div class="star" style="background:${color};"><span>&#128044;</span></div>`,
+    iconSize: [20,20], iconAnchor: [10,10], popupAnchor: [0,-10]
+  });
+}
+function boatIcon(color) {
+  return L.divIcon({
+    className: '',
+    html: `<div class="star" style="background:${color};"><span>&#128674;</span></div>`,
+    iconSize: [20,20], iconAnchor: [10,10], popupAnchor: [0,-10]
+  });
+}
+
+const COLOR = {
+  ferry: '#b52a1f',
+  kilkenny: '#2b2f77',
+  cork: '#c05a17',
+  killarney: '#1f8a52',
+  doolin: '#7d3c98',
+  galway: '#12806c'
+};
+
+// --- Layer groups (toggle in the layer control) ---
+const lgFerry   = L.layerGroup();
+const lgHeberg  = L.layerGroup();
+const lgPoi     = L.layerGroup();
+const lgRoute   = L.layerGroup();
+
+// --- Ferry (port marker) ---
+L.marker([53.345, -6.214], {icon: ferryIcon()})
+  .bindTooltip('<b>Ferry - Dublin Port</b> &mdash; 1 &amp; 14 ao&ucirc;t', {className:'date-tip'})
+  .bindPopup('<b>Ferry - Dublin Port</b><br>Irish Ferries (r&eacute;s. 34502237)<br>Aller : sam. 1 ao&ucirc;t 16h00 (Cherbourg) &rarr; dim. 2 ao&ucirc;t 11h30<br>Retour : ven. 14 ao&ucirc;t 16h30 &rarr; sam. 15 ao&ucirc;t 10h45 (Cherbourg)')
+  .addTo(lgFerry);
+
+// --- Hebergements (icone maison, tooltip = dates au survol) ---
+const HEBERG = [
+  [52.6530, -7.2508, COLOR.kilkenny, 'Bregagh House B&amp;B', 'Du 2 ao&ucirc;t au 3 ao&ucirc;t (1 nuit)', 'Dean Street, Kilkenny City, R95 K094<br><i>B&amp;B, r&eacute;servation directe</i>'],
+  [51.8975, -8.4955, COLOR.cork, 'Modern City Apartment | Ground Floor', 'Du 3 ao&ucirc;t au 5 ao&ucirc;t (2 nuits)', 'College View Terrace, Western Rd, Mardyke, Cork, T12 KF40<br><i>Airbnb, h&ocirc;te SL Living</i>'],
+  [52.0599, -9.5044, COLOR.killarney, 'H&eacute;bergement Killarney', 'Du 5 ao&ucirc;t au 8 ao&ucirc;t (3 nuits)', '<i>&Agrave; r&eacute;server</i>'],
+  [52.9455, -9.3995, COLOR.doolin, 'Liscannor Bay View', 'Du 8 ao&ucirc;t au 10 ao&ucirc;t (2 nuits)', 'Ballylaan, Co. Clare, V95 HW30<br><i>Airbnb, h&ocirc;te Denise</i>'],
+  [53.2820, -9.0620, COLOR.galway, '"8. 2 bed close to it all..."', 'Du 10 ao&ucirc;t au 14 ao&ucirc;t (4 nuits)', '8, 32 Newcastle Rd, Galway<br><i>Airbnb</i>'],
+];
+HEBERG.forEach(([lat,lon,color,name,dates,info]) => {
+  L.marker([lat,lon], {icon: houseIcon(color)})
+    .bindTooltip(`<b>${name}</b> &mdash; ${dates}`, {className:'date-tip'})
+    .bindPopup(`<b>${name}</b><br>${dates}<br>${info}`)
+    .addTo(lgHeberg);
+});
+
+// --- Points d'interet (etoile, ou chateau si isCastle=true ; tooltip = nom + date au survol) ---
+const POI = [
+  [52.6455, -7.2508, COLOR.kilkenny, 'Kilkenny Castle', '2 ao&ucirc;t', 'Ch&acirc;teau m&eacute;di&eacute;val, parc immense &#9733;&#9733;&#9733;', true],
+  [52.5236, -7.8899, COLOR.cork, 'Rock of Cashel', '3 ao&ucirc;t', 'Forteresse royale &#9733;&#9733;&#9733;', true],
+  [51.8985, -8.4756, COLOR.cork, 'English Market', '4 ao&ucirc;t', 'March&eacute; couvert historique &#9733;&#9733;', false],
+  [51.8756, -8.2994, COLOR.cork, 'Fota Wildlife Park', '4 ao&ucirc;t', 'Safari &agrave; pied &#9733;&#9733;&#9733;', false],
+  [51.8501, -8.2946, COLOR.cork, 'Cobh (option)', '4 ao&ucirc;t', 'Maisons color&eacute;es, mus&eacute;e Titanic &#9733;&#9733;', false],
+  [51.6952, -8.5300, COLOR.killarney, 'Kinsale / Charles Fort', '5 ao&ucirc;t', 'Port color&eacute;, d&eacute;but WAW &#9733;&#9733;', true],
+  [51.9298, -8.5701, COLOR.killarney, 'Blarney Castle', '5 ao&ucirc;t', 'Donjon m&eacute;di&eacute;val, jardins &#9733;&#9733;&#9733;', true],
+  [52.0393, -9.5350, COLOR.killarney, 'Ross Castle', '6 ao&ucirc;t', 'Forteresse de clan au bord du lac &#9733;&#9733;&#9733;', true],
+  [52.0245, -9.6215, COLOR.killarney, 'Gap of Dunloe', '6 ao&ucirc;t', 'Cal&egrave;che, paysage de film &#9733;&#9733;&#9733;', false],
+  [52.0088, -9.5225, COLOR.killarney, 'Cascade de Torc', '6 ao&ucirc;t', 'Accessible en poussette &#9733;&#9733;', false],
+  [52.0930, -10.4577, COLOR.killarney, 'Slea Head Drive', '7 ao&ucirc;t', 'Route c&ocirc;ti&egrave;re Dingle &#9733;&#9733;&#9733;', false],
+  [52.1310, -9.9420, COLOR.killarney, 'Inch Beach', '7 ao&ucirc;t', '5 km de sable blond &#9733;&#9733;&#9733;', false],
+  [52.7002, -8.8107, COLOR.doolin, 'Bunratty Castle &amp; Folk Park', '8 ao&ucirc;t', 'Ch&acirc;teau et village reconstitu&eacute; &#9733;&#9733;&#9733;', true],
+  [52.9715, -9.4309, COLOR.doolin, 'Falaises de Moher', '9 ao&ucirc;t', 'Ouverture 9h conseill&eacute;e &#9733;&#9733;&#9733;', false],
+  [53.0567, -9.1444, COLOR.doolin, 'Le Burren', '9 ao&ucirc;t', 'Paysage lunaire calcaire &#9733;&#9733;', false],
+  [53.1372, -8.9375, COLOR.galway, 'Dunguaire Castle', '10 ao&ucirc;t', 'Tour de d&eacute;fense sur la baie (Kinvara) &#9733;&#9733;', true],
+  [53.2707, -9.0568, COLOR.galway, 'Galway city', '10 ao&ucirc;t', 'Quartier latin, musiciens de rue &#9733;&#9733;', false],
+  [53.2620, -9.0730, COLOR.galway, 'Salthill Promenade', '10 ao&ucirc;t', '2 km de bord de mer &#9733;', false],
+  [53.3005, -9.2911, COLOR.galway, 'Aughnanure Castle', '11 ao&ucirc;t', 'Ch&acirc;teau du clan O&#39;Flaherty &#9733;&#9733;', true],
+  [53.3005, -8.7445, COLOR.galway, 'Athenry Castle', '11 ao&ucirc;t', 'Remparts m&eacute;di&eacute;vaux &#9733;&#9733;', true],
+  [53.5511, -9.8917, COLOR.galway, 'Abbaye de Kylemore', '12 ao&ucirc;t', 'Ch&acirc;teau sur l&#39;eau, jardins &#9733;&#9733;&#9733;', true],
+  [53.4900, -10.0700, COLOR.galway, 'Sky Road', '12 ao&ucirc;t', 'Route panoramique WAW &#9733;&#9733;&#9733;', false],
+  [53.6100, -9.8300, COLOR.galway, 'Killary Fjord', '12 ao&ucirc;t', 'Seul fjord d&#39;Irlande &#9733;&#9733;', false],
+  [53.2610, -9.0755, COLOR.galway, 'Galway Atlantaquaria', '13 ao&ucirc;t', 'Aquarium, bassins tactiles &#9733;&#9733;', false],
+];
+POI.forEach(([lat,lon,color,name,date,info,isCastle]) => {
+  L.marker([lat,lon], {icon: isCastle ? castleIcon(color) : starIcon(color)})
+    .bindTooltip(`<b>${name}</b> &mdash; ${date}`, {className:'date-tip'})
+    .bindPopup(`<b>${name}</b><br>${date}<br>${info}`)
+    .addTo(lgPoi);
+});
+
+// --- Sorties a reserver (liens de reservation) ---
+const BOOKINGS = [
+  [53.0138, -9.3757, COLOR.doolin, 'Aran Islands (Inis M&oacute;r) &amp; Cliffs Combo', '9 ao&ucirc;t (&agrave; confirmer)',
+   'D&eacute;part Doolin Pier &mdash; combo &icirc;les d\'Aran + vue des falaises depuis la mer',
+   'https://doolinferry.com/book-aran-cliffs-combo/inis-mor/', 'aran'],
+  [52.1400, -10.2680, COLOR.killarney, 'Dingle Dolphin &mdash; Mini Eco Tour', '7 ao&ucirc;t (&agrave; confirmer)',
+   'D&eacute;part Dingle Marina &mdash; sortie 2h en famille, id&eacute;ale avec un b&eacute;b&eacute;',
+   'https://www.dingledolphin.com/book-now/', 'dolphin'],
+];
+const bookingIcon = {
+  'aran': boatIcon,
+  'dolphin': dolphinIcon,
+};
+BOOKINGS.forEach(([lat,lon,color,name,date,info,url,kind]) => {
+  L.marker([lat,lon], {icon: bookingIcon[kind](color)})
+    .bindTooltip(`<b>${name}</b> &mdash; ${date}`, {className:'date-tip'})
+    .bindPopup(`<b>${name}</b><br>${date}<br>${info}<br><a href="${url}" target="_blank" rel="noopener">R&eacute;server &rarr;</a>`)
+    .addTo(lgPoi);
+});
+
+// ---------------------------------------------------------------------
+// Itineraire : segments routiers (suivent les routes via OSRM) +
+// segments maritimes (ferry, ligne droite en pointille)
+// ---------------------------------------------------------------------
+const STOPS = {
+  dublin:   [53.345, -6.214],
+  kilkenny: [52.6530, -7.2508],
+  cashel:   [52.5236, -7.8899],
+  cork:     [51.8975, -8.4955],
+  kinsale:  [51.6952, -8.5300],
+  blarney:  [51.9298, -8.5701],
+  killarney:[52.0599, -9.5044],
+  tarbert:  [52.5836, -9.3903],
+  killimer: [52.6103, -9.3805],
+  bunratty: [52.7002, -8.8107],
+  doolin:   [52.9455, -9.3995],
+  ennis:    [52.8438, -8.9864],
+  kinvara:  [53.1372, -8.9375],
+  galway:   [53.2820, -9.0620],
+};
+
+const LEGS = [
+  ['dublin','kilkenny','road'],
+  ['kilkenny','cashel','road'],
+  ['cashel','cork','road'],
+  ['cork','kinsale','road'],
+  ['kinsale','blarney','road'],
+  ['blarney','killarney','road'],
+  ['killarney','tarbert','road'],
+  ['tarbert','killimer','ferry'],
+  ['killimer','bunratty','road'],
+  ['bunratty','doolin','road'],
+  ['doolin','ennis','road'],
+  ['ennis','kinvara','road'],
+  ['kinvara','galway','road'],
+  ['galway','dublin','road'],
+];
+
+async function fetchRoadRoute(a, b) {
+  const url = `https://router.project-osrm.org/route/v1/driving/${a[1]},${a[0]};${b[1]},${b[0]}?overview=full&geometries=geojson`;
+  const res = await fetch(url, {signal: AbortSignal.timeout(6000)});
+  if (!res.ok) throw new Error('OSRM error');
+  const data = await res.json();
+  if (!data.routes || !data.routes.length) throw new Error('no route');
+  return data.routes[0].geometry.coordinates.map(c => [c[1], c[0]]);
+}
+
+async function drawItinerary() {
+  for (const [fromKey, toKey, mode] of LEGS) {
+    const a = STOPS[fromKey], b = STOPS[toKey];
+    if (mode === 'ferry') {
+      L.polyline([a, b], {color:'#1a5fb4', weight:3, opacity:0.85, dashArray:'2,10'}).addTo(lgRoute);
+      const mid = [(a[0]+b[0])/2, (a[1]+b[1])/2];
+      L.marker(mid, {icon: ferryIcon()}).bindTooltip('Ferry Shannon (20 min)', {className:'date-tip'}).addTo(lgRoute);
+      continue;
+    }
+    try {
+      const coords = await fetchRoadRoute(a, b);
+      L.polyline(coords, {color:'#b52a1f', weight:3, opacity:0.8, dashArray:'1,9'}).addTo(lgRoute);
+    } catch (e) {
+      // Repli : ligne droite en pointille si le service de routage est indisponible
+      L.polyline([a, b], {color:'#b52a1f', weight:3, opacity:0.6, dashArray:'6,6'}).addTo(lgRoute);
+    }
+  }
+  // Traversee maritime longue distance Dublin <-> Cherbourg (hors carte, symbolique)
+  const cherbourgDir = [53.345 - 3.2, -6.214 + 4.6];
+  L.polyline([STOPS.dublin, cherbourgDir], {color:'#1a5fb4', weight:2, opacity:0.5, dashArray:'2,10'}).addTo(lgRoute);
+}
+
+lgFerry.addTo(map); lgHeberg.addTo(map); lgPoi.addTo(map); lgRoute.addTo(map);
+drawItinerary();
+
+L.control.layers(null, {
+  "Itin&eacute;raire": lgRoute,
+  "Ferry": lgFerry,
+  "H&eacute;bergements (maison)": lgHeberg,
+  "Centres d'int&eacute;r&ecirc;t (&eacute;toile)": lgPoi
+}, {collapsed:false, position:'topright'}).addTo(map);
+
+// Legend
+const legend = L.control({position:'bottomleft'});
+legend.onAdd = function() {
+  const div = L.DomUtil.create('div', 'info legend');
+  div.style.background = 'rgba(255,255,255,0.92)';
+  div.style.padding = '8px 10px';
+  div.style.borderRadius = '6px';
+  div.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)';
+  div.style.fontSize = '12px';
+  div.innerHTML = `<b>L&eacute;gende</b><br>
+    &#127968; H&eacute;bergement &middot; &#11088; Centre d'int&eacute;r&ecirc;t &middot; &#127984; Ch&acirc;teau &middot; &#9875; Ferry<br>
+    <span style="color:${COLOR.kilkenny}">&#9632;</span> Kilkenny &middot;
+    <span style="color:${COLOR.cork}">&#9632;</span> Cork &middot;
+    <span style="color:${COLOR.killarney}">&#9632;</span> Killarney<br>
+    <span style="color:${COLOR.doolin}">&#9632;</span> Doolin &middot;
+    <span style="color:${COLOR.galway}">&#9632;</span> Galway<br>
+    <i>Survolez un point pour voir le nom et la date</i>`;
+  return div;
+};
+legend.addTo(map);
+
+// Fit bounds to Ireland markers
+const irelandBounds = L.latLngBounds(Object.values(STOPS));
+map.fitBounds(irelandBounds, {padding:[30,30]});
+</script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<style>
+@page {
+  size: A4;
+  margin: 18mm 16mm 16mm 16mm;
+}
+* { box-sizing: border-box; }
+html { background: #eceef2; }
+body {
+  font-family: "DejaVu Sans", Arial, sans-serif;
+  color: #222;
+  font-size: 10.5pt;
+  line-height: 1.35;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 28px 32px 48px;
+  background: #fff;
+}
+h1 {
+  text-align: center;
+  font-size: 20pt;
+  margin: 0 0 4px 0;
+}
+.subtitle {
+  text-align: center;
+  color: #555;
+  font-size: 10.5pt;
+  margin: 0 0 4px 0;
+}
+.family {
+  text-align: center;
+  color: #666;
+  font-size: 9.5pt;
+  margin: 0 0 12px 0;
+}
+hr.top {
+  border: none;
+  border-top: 1px solid #333;
+  margin: 0 0 14px 0;
+}
+table.summary {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 9.3pt;
+}
+table.summary th {
+  background: #2b2f77;
+  color: white;
+  text-align: left;
+  padding: 6px 8px;
+  font-size: 9pt;
+}
+table.summary td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #e2e2e2;
+  vertical-align: top;
+}
+table.summary tr:nth-child(even) td { background: #f6f6f8; }
+table.summary tr.depart td { color: #b52a1f; font-weight: bold; }
+table.summary tr.ferry-row td { color: #b52a1f; font-weight: bold; background: #fdf1ef !important; }
+.etape-name { font-weight: bold; }
+.stage {
+  margin-bottom: 16px;
+  break-inside: avoid;
+}
+.stage-header {
+  color: white;
+  padding: 6px 10px;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 12pt;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.stage-header .nights { font-weight: normal; font-size: 9.5pt; }
+.day {
+  padding: 8px 4px 8px 10px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+}
+.day:last-child { border-bottom: none; }
+.day-title { font-weight: bold; flex: 0 0 92px; white-space: nowrap; }
+.day-content { flex: 1; }
+.day-content ul { margin: 0; padding-left: 16px; }
+.day-content li { margin-bottom: 2px; }
+.booking {
+  margin-top: 4px;
+  margin-left: 0;
+  padding: 6px 10px;
+  border-left: 3px solid #2b2f77;
+  background: #f2f3fb;
+  font-size: 9.3pt;
+}
+.booking b { color: #1a1a1a; }
+.booking .source { color: #555; font-style: italic; }
+.booking-pending {
+  margin-top: 4px;
+  padding: 6px 10px;
+  border-left: 3px solid #bbb;
+  background: #f7f7f7;
+  font-size: 9.3pt;
+  color: #777;
+  font-style: italic;
+}
+.options {
+  margin-top: 4px;
+  font-size: 9.2pt;
+  color: #555;
+}
+.options div { margin-bottom: 1px; }
+.infobox-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 6px;
+  font-size: 9pt;
+}
+.infobox-table td {
+  padding: 6px 8px;
+  border-top: 1px solid #ddd;
+  vertical-align: top;
+}
+.infobox-table td.label { font-weight: bold; width: 130px; }
+.map-embed { margin: 4px 0 20px 0; }
+.map-embed-title { font-weight: bold; font-size: 10.5pt; margin-bottom: 6px; }
+.map-embed iframe {
+  width: 100%; height: 480px; border: 1px solid #ddd; border-radius: 8px;
+  display: block;
+}
+.map-embed-note { font-size: 8.3pt; color: #777; margin-top: 4px; font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>&#9752; Irlande 2026</h1>
+<p class="subtitle">2 &ndash; 14 ao&ucirc;t</p>
+<hr class="top">
+
+<table class="summary">
+<tr>
+  <th>&Eacute;tape</th><th>Dates</th><th>Nuits</th><th>H&eacute;bergement</th>
+</tr>
+<tr class="ferry-row"><td class="etape-name">Ferry aller</td><td colspan="3">Sam. 1 ao&ucirc;t 16h00 (Cherbourg) &rarr; Dim. 2 ao&ucirc;t 11h30 (Dublin) &middot; Irish Ferries</td></tr>
+<tr><td class="etape-name" style="color:#2b2f77;">Kilkenny</td><td>Dim. 2 ao&ucirc;t</td><td>1 nuit</td><td>Bregagh House B&amp;B (B&amp;B, direct)</td></tr>
+<tr><td class="etape-name" style="color:#c05a17;">Cork</td><td>Lun. 3 &ndash; Mar. 4 ao&ucirc;t</td><td>2 nuits</td><td>Modern City Apartment | Ground Floor (Airbnb)</td></tr>
+<tr><td class="etape-name" style="color:#1f8a52;">Killarney</td><td>Mer. 5 &ndash; Ven. 7 ao&ucirc;t</td><td>3 nuits</td><td><i>&agrave; r&eacute;server</i></td></tr>
+<tr><td class="etape-name" style="color:#7d3c98;">Ennis / Doolin</td><td>Sam. 8 &ndash; Dim. 9 ao&ucirc;t</td><td>2 nuits</td><td>Liscannor Bay View (Airbnb)</td></tr>
+<tr><td class="etape-name" style="color:#12806c;">Galway / Salthill</td><td>Lun. 10 &ndash; Jeu. 13 ao&ucirc;t</td><td>4 nuits</td><td>8. 2 bed close to it all&hellip; (Airbnb)</td></tr>
+<tr class="depart"><td class="etape-name">D&eacute;part ferry</td><td>Ven. 14 ao&ucirc;t</td><td colspan="2">Galway &rarr; Dublin ~2h20, puis ferry 16h30 &rarr; Cherbourg (arriv&eacute;e sam. 15 ao&ucirc;t 10h45)</td></tr>
+</table>
+
+<div class="map-embed">
+  <div class="map-embed-title">&#9752; Carte du voyage &mdash; h&eacute;bergements, ferry &amp; centres d'int&eacute;r&ecirc;t</div>
+  <iframe src="Carte_Irlande_2026.html" title="Carte du voyage" loading="lazy"></iframe>
+  <div class="map-embed-note">Carte interactive (fond OpenStreetMap) &mdash; survolez un point pour voir son nom et sa date, cliquez pour plus de d&eacute;tails.</div>
+</div>
+
+<!-- KILKENNY -->
+<div class="stage">
+  <div class="stage-header" style="background:#2b2f77;">
+    <span>&#9752; Kilkenny</span><span class="nights">1 nuit &mdash; dim. 2 ao&ucirc;t</span>
+  </div>
+  <div class="day">
+    <span class="day-title">Dim. 2 ao&ucirc;t</span>
+    <span class="day-content">
+      <ul>
+        <li>11h30 : arriv&eacute;e du ferry (Irish Ferries, d&eacute;p. Cherbourg sam. 1er ao&ucirc;t 16h00) au port de Dublin</li>
+        <li>Route directe Dublin &rarr; Kilkenny (~1h30 via M9)</li>
+        <li>Kilkenny Castle &#9733;&#9733;&#9733; &mdash; ch&acirc;teau m&eacute;di&eacute;val massif, parc immense et plat (poussette OK)</li>
+        <li>Balade dans la ville m&eacute;di&eacute;vale et le quartier historique (Medieval Mile)</li>
+      </ul>
+      <div class="booking">
+        <b>Nuit :</b> Bregagh House B&amp;B &mdash; Dean Street, Kilkenny City, R95 K094 <span class="source">(B&amp;B, r&eacute;servation directe)</span>
+      </div>
+    </span>
+  </div>
+</div>
+
+<!-- CORK -->
+<div class="stage">
+  <div class="stage-header" style="background:#c05a17;">
+    <span>&#9752; Cork</span><span class="nights">2 nuits &mdash; lun. 3 &amp; mar. 4 ao&ucirc;t</span>
+  </div>
+  <div class="day">
+    <span class="day-title">Lun. 3 ao&ucirc;t</span>
+    <span class="day-content">
+      <ul>
+        <li>Route Kilkenny &rarr; Rock of Cashel &#9733;&#9733;&#9733; (~45 min) &mdash; forteresse royale sur son rocher</li>
+        <li>Cashel &rarr; Cork (~1h10)</li>
+        <li>Arriv&eacute;e &agrave; Cork, installation</li>
+      </ul>
+      <div class="booking">
+        <b>Nuit :</b> Modern City Apartment | Ground Floor &mdash; College View Terrace, Western Rd, Mardyke, Cork, T12 KF40 <span class="source">(Airbnb, h&ocirc;te SL Living &ndash; Crawford House)</span>
+      </div>
+    </span>
+  </div>
+  <div class="day">
+    <span class="day-title">Mar. 4 ao&ucirc;t</span>
+    <span class="day-content">
+      <ul>
+        <li>Fota Wildlife Park &#9733;&#9733;&#9733; &mdash; safari &agrave; pied, l&eacute;muriens en libert&eacute;, 100% poussette</li>
+        <li>English Market &#9733;&#9733; &mdash; march&eacute; couvert historique, gastronomie locale</li>
+        <li>Option : Cobh &#9733;&#9733; &mdash; maisons color&eacute;es, mus&eacute;e Titanic (20 min de Cork)</li>
+      </ul>
+      <div class="booking">
+        <b>Nuit :</b> Modern City Apartment | Ground Floor &mdash; College View Terrace, Western Rd, Mardyke, Cork, T12 KF40 <span class="source">(Airbnb, h&ocirc;te SL Living &ndash; Crawford House)</span>
+      </div>
+    </span>
+  </div>
+</div>
+
+<!-- KILLARNEY -->
+<div class="stage">
+  <div class="stage-header" style="background:#1f8a52;">
+    <span>&#9752; Killarney</span><span class="nights">3 nuits &mdash; mer. 5, jeu. 6 &amp; ven. 7 ao&ucirc;t</span>
+  </div>
+  <div class="day">
+    <span class="day-title">Mer. 5 ao&ucirc;t</span>
+    <span class="day-content">
+      <ul>
+        <li>Route Cork &rarr; Kinsale &#9733;&#9733; (~30 min) &mdash; Charles Fort, port color&eacute;, d&eacute;but de la WAW</li>
+        <li>Kinsale &rarr; Blarney Castle &#9733;&#9733;&#9733; (~30 min) &mdash; donjon m&eacute;di&eacute;val, jardins secrets</li>
+        <li>Blarney &rarr; Killarney (~1h20), installation</li>
+      </ul>
+      <div class="options">
+        <div>A. The Lake Hotel &mdash; vue lac et cerfs, parking gratuit</div>
+        <div>B. Castlerosse Park Resort &mdash; tr&egrave;s familial, grandes chambres</div>
+        <div>C. Aghadoe Heights &mdash; vue panoramique, spa</div>
+      </div>
+      <div class="booking-pending"><b>Nuit :</b> Killarney &mdash; r&eacute;servation &agrave; venir</div>
+    </span>
+  </div>
+  <div class="day">
+    <span class="day-title">Jeu. 6 ao&ucirc;t</span>
+    <span class="day-content">
+      <ul>
+        <li>Ross Castle &#9733;&#9733;&#9733; &mdash; forteresse de clan au bord du lac</li>
+        <li>Gap of Dunloe en cal&egrave;che &#9733;&#9733;&#9733; &mdash; paysage de film, id&eacute;al b&eacute;b&eacute; (pas de marche)</li>
+        <li>Cascade de Torc &#9733;&#9733; &mdash; accessible en poussette jusqu'au pied</li>
+      </ul>
+      <div class="booking-pending"><b>Nuit :</b> Killarney &mdash; r&eacute;servation &agrave; venir</div>
+    </span>
+  </div>
+  <div class="day">
+    <span class="day-title">Ven. 7 ao&ucirc;t</span>
+    <span class="day-content">
+      <ul>
+        <li>Journ&eacute;e p&eacute;ninsule de Dingle depuis Killarney (~1h15)</li>
+        <li>Slea Head Drive &#9733;&#9733;&#9733; &mdash; la plus belle route c&ocirc;ti&egrave;re de la WAW</li>
+        <li>Inch Beach &#9733;&#9733;&#9733; &mdash; 5 km de sable blond, parfait avec enfants</li>
+      </ul>
+      <div class="booking-pending"><b>Nuit :</b> Killarney &mdash; r&eacute;servation &agrave; venir</div>
+    </span>
+  </div>
+</div>
+
+<!-- ENNIS / DOOLIN -->
+<div class="stage">
+  <div class="stage-header" style="background:#7d3c98;">
+    <span>&#9752; Ennis / Doolin</span><span class="nights">2 nuits &mdash; sam. 8 &amp; dim. 9 ao&ucirc;t</span>
+  </div>
+  <div class="day">
+    <span class="day-title">Sam. 8 ao&ucirc;t</span>
+    <span class="day-content">
+      <ul>
+        <li>Route Killarney &rarr; Tarbert (~1h) &mdash; ferry Tarbert&rarr;Killimer &#9733; (travers&eacute;e Shannon 20 min)</li>
+        <li>Bunratty Castle &amp; Folk Park &#9733;&#9733;&#9733; &mdash; ch&acirc;teau complet, village reconstitu&eacute;, animaux</li>
+        <li>Arriv&eacute;e Ennis/Doolin, installation</li>
+      </ul>
+      <div class="booking">
+        <b>Nuit :</b> Liscannor Bay View &mdash; Ballylaan, Co. Clare, V95 HW30 <span class="source">(Airbnb, h&ocirc;te Denise)</span>
+      </div>
+    </span>
+  </div>
+  <div class="day">
+    <span class="day-title">Dim. 9 ao&ucirc;t</span>
+    <span class="day-content">
+      <ul>
+        <li>Falaises de Moher &#9733;&#9733;&#9733; &mdash; &agrave; l'ouverture (9h), porte-b&eacute;b&eacute; conseill&eacute; (vent fort)</li>
+        <li>Doonagore Castle &#9733; &mdash; tour ronde en vue depuis la route</li>
+        <li>Le Burren &#9733;&#9733; &mdash; paysage lunaire calcaire unique au monde</li>
+        <li>Burren Birds of Prey Center &#9733;&#9733; &mdash; spectacle de fauconnerie</li>
+      </ul>
+      <div class="booking">
+        <b>Nuit :</b> Liscannor Bay View &mdash; Ballylaan, Co. Clare, V95 HW30 <span class="source">(Airbnb, h&ocirc;te Denise)</span>
+      </div>
+    </span>
+  </div>
+</div>
+
+<!-- GALWAY / SALTHILL -->
+<div class="stage">
+  <div class="stage-header" style="background:#12806c;">
+    <span>&#9752; Galway / Salthill</span><span class="nights">4 nuits &mdash; lun. 10, mar. 11, mer. 12 &amp; jeu. 13 ao&ucirc;t</span>
+  </div>
+  <div class="day">
+    <span class="day-title">Lun. 10 ao&ucirc;t</span>
+    <span class="day-content">
+      <ul>
+        <li>Route Ennis &rarr; Galway (~40 min)</li>
+        <li>Dunguaire Castle &#9733;&#9733; &mdash; tour de d&eacute;fense sur la baie (Kinvara, sur la route)</li>
+        <li>Galway city &#9733;&#9733; &mdash; quartier latin pi&eacute;tonnier, musiciens de rue</li>
+        <li>Salthill Promenade &mdash; 2 km de bord de mer, parfait en poussette</li>
+      </ul>
+      <div class="booking">
+        <b>Nuit :</b> "8. 2 bed close to it all with parking close by." &mdash; 8, 32 Newcastle Rd, Galway <span class="source">(Airbnb)</span>
+      </div>
+    </span>
+  </div>
+  <div class="day">
+    <span class="day-title">Mar. 11 ao&ucirc;t</span>
+    <span class="day-content">
+      <ul>
+        <li>Aughnanure Castle &#9733;&#9733; &mdash; ch&acirc;teau de clan O'Flaherty, tr&egrave;s authentique (30 min)</li>
+        <li>Diamond Hill &#9733;&#9733;&#9733; &mdash; sentier sur pontons de bois, Parc National du Connemara (1h)</li>
+        <li>Athenry Castle &#9733;&#9733; &mdash; remparts m&eacute;di&eacute;vaux, bourg intact (30 min)</li>
+      </ul>
+      <div class="booking">
+        <b>Nuit :</b> "8. 2 bed close to it all with parking close by." &mdash; 8, 32 Newcastle Rd, Galway <span class="source">(Airbnb)</span>
+      </div>
+    </span>
+  </div>
+  <div class="day">
+    <span class="day-title">Mer. 12 ao&ucirc;t</span>
+    <span class="day-content">
+      <ul>
+        <li>Grand Connemara &mdash; d&eacute;part t&ocirc;t (boucle ~160 km / 2h30 de route)</li>
+        <li>Abbaye de Kylemore &#9733;&#9733;&#9733; &mdash; ch&acirc;teau sur l'eau, jardins plats, poussette OK</li>
+        <li>Sky Road &#9733;&#9733;&#9733; &mdash; route panoramique WAW, vues sur l'Atlantique</li>
+        <li>Killary Fjord &#9733;&#9733; &mdash; seul fjord d'Irlande, croisi&egrave;re calme id&eacute;ale b&eacute;b&eacute;</li>
+      </ul>
+      <div class="booking">
+        <b>Nuit :</b> "8. 2 bed close to it all with parking close by." &mdash; 8, 32 Newcastle Rd, Galway <span class="source">(Airbnb)</span>
+      </div>
+    </span>
+  </div>
+  <div class="day">
+    <span class="day-title">Jeu. 13 ao&ucirc;t</span>
+    <span class="day-content">
+      <ul>
+        <li>Galway Atlantaquaria &#9733;&#9733; &mdash; aquarium avec bassins tactiles (raies, &eacute;toiles de mer)</li>
+        <li>Shopping quartier latin &mdash; bagues de Claddagh, pulls irlandais, souvenirs</li>
+        <li>Option : plage de Dog's Bay &#9733;&#9733; &mdash; sable blanc corail, tr&egrave;s calme (1h30)</li>
+      </ul>
+      <div class="booking">
+        <b>Nuit :</b> "8. 2 bed close to it all with parking close by." &mdash; 8, 32 Newcastle Rd, Galway <span class="source">(Airbnb)</span>
+      </div>
+    </span>
+  </div>
+</div>
+
+</body>
+</html>
