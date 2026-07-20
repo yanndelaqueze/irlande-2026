@@ -97,10 +97,34 @@ const lgHeberg  = L.layerGroup();
 const lgPoi     = L.layerGroup();
 const lgRoute   = L.layerGroup();
 
-// --- Ferry (port marker) ---
+// --- Ferry (port markers) ---
 L.marker([53.345, -6.214], {icon: ferryIcon()})
   .bindTooltip('<b>Ferry - Dublin Port</b> &mdash; 1 &amp; 14 ao&ucirc;t', {className:'date-tip'})
   .bindPopup('<b>Ferry - Dublin Port</b><br>Irish Ferries (r&eacute;s. 34502237)<br>Aller : sam. 1 ao&ucirc;t 16h00 (Cherbourg) &rarr; dim. 2 ao&ucirc;t 11h30<br>Retour : ven. 14 ao&ucirc;t 16h30 &rarr; sam. 15 ao&ucirc;t 10h45 (Cherbourg)')
+  .addTo(lgFerry);
+
+L.marker([49.6435, -1.6160], {icon: ferryIcon()})
+  .bindTooltip('<b>Ferry - Cherbourg</b> &mdash; d&eacute;part sam. 1 ao&ucirc;t 16h00', {className:'date-tip'})
+  .bindPopup('<b>Ferry - Cherbourg (Gare Maritime)</b><br>Irish Ferries (r&eacute;s. 34502237)<br>D&eacute;part : sam. 1 ao&ucirc;t 16h00 &rarr; arriv&eacute;e Dublin dim. 2 ao&ucirc;t 11h30<br>Retour : arriv&eacute;e sam. 15 ao&ucirc;t 10h45 (depuis Dublin, d&eacute;part ven. 14 ao&ucirc;t 16h30)')
+  .addTo(lgFerry);
+
+// --- Traversee maritime Cherbourg <-> Dublin (trace approximative suivant les couloirs maritimes :
+// Manche/Celtic Sea au sud de l'Angleterre, puis mer d'Irlande entre l'Irlande et le Pays de Galles) ---
+const FERRY_SEA_ROUTE = [
+  [49.6435, -1.6160],  // Cherbourg
+  [49.72,  -2.60],
+  [49.85,  -4.00],
+  [50.00,  -5.50],
+  [50.20,  -6.80],
+  [51.00,  -7.50],
+  [51.80,  -6.60],
+  [52.50,  -5.90],
+  [53.00,  -6.00],
+  [53.28,  -5.98],
+  [53.345, -6.214]     // Dublin Port
+];
+L.polyline(FERRY_SEA_ROUTE, {color:'#1a5fb4', weight:3, opacity:0.85, dashArray:'2,10'})
+  .bindTooltip('Ferry Cherbourg &harr; Dublin (Irish Ferries)', {className:'date-tip', sticky:true})
   .addTo(lgFerry);
 
 // --- Hebergements (icone maison, tooltip = dates au survol) ---
@@ -236,9 +260,6 @@ async function drawItinerary() {
       L.polyline([a, b], {color:'#b52a1f', weight:3, opacity:0.6, dashArray:'6,6'}).addTo(lgRoute);
     }
   }
-  // Traversee maritime longue distance Dublin <-> Cherbourg (hors carte, symbolique)
-  const cherbourgDir = [53.345 - 3.2, -6.214 + 4.6];
-  L.polyline([STOPS.dublin, cherbourgDir], {color:'#1a5fb4', weight:2, opacity:0.5, dashArray:'2,10'}).addTo(lgRoute);
 }
 
 lgFerry.addTo(map); lgHeberg.addTo(map); lgPoi.addTo(map); lgRoute.addTo(map);
@@ -267,13 +288,14 @@ legend.onAdd = function() {
     <span style="color:${COLOR.killarney}">&#9632;</span> Killarney<br>
     <span style="color:${COLOR.doolin}">&#9632;</span> Doolin &middot;
     <span style="color:${COLOR.galway}">&#9632;</span> Galway<br>
+    <span style="color:#1a5fb4">&#9632;</span> Traversee ferry (pointill&eacute; bleu) &middot; Cherbourg &harr; Dublin<br>
     <i>Survolez un point pour voir le nom et la date</i>`;
   return div;
 };
 legend.addTo(map);
 
-// Fit bounds to Ireland markers
-const irelandBounds = L.latLngBounds(Object.values(STOPS));
+// Fit bounds to all markers, including Cherbourg
+const irelandBounds = L.latLngBounds([...Object.values(STOPS), [49.6435, -1.6160]]);
 map.fitBounds(irelandBounds, {padding:[30,30]});
 </script>
 </body>
